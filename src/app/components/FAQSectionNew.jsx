@@ -27,26 +27,28 @@ const FAQSectionNew = () => {
     ];
 
     return (
-        <div className="bg-black text-white w-full px-6 md:px-14 py-20">
-            {/* Heading */}
-            <h1 className="font-[bwGrad-m] text-center leading-tight text-[2.5rem] px-5 md:px-0 md:text-[4.5rem] text-left !px-0">
-                Frequently <span className="accent text-[#9685fe]">Asked Questions</span>
-            </h1>
+        <div className="bg-black text-white w-full">
+            <div className="px-6 md:px-14 py-20">
+                {/* Heading */}
+                <h1 className="font-[bwGrad-m] text-center leading-tight text-[2.5rem] px-5 md:px-0 md:text-[4.5rem] text-left !px-0">
+                    Frequently <span className="accent text-[#9685fe]">Asked Questions</span>
+                </h1>
 
-            {/* FAQ Items */}
-            <div className="mt-10">
-                {faqs.map((faq, index) => (
-                    <div key={index} className="border-b border-white/20 py-5 group">
-                        <h1 className="text-2xl md:text-3xl font-[bwGrad-m] text-white group-hover:text-accent transition-colors duration-300">
-                            {faq.question}
-                        </h1>
-                        <div className="overflow-hidden transition-all duration-500 ease-in-out max-h-96 opacity-100 mt-4">
-                            <p className="text-lg md:text-lg font-[bwGrad-l] text-white/70 leading-relaxed">
-                                {faq.answer}
-                            </p>
+                {/* FAQ Items */}
+                <div className="mt-10">
+                    {faqs.map((faq, index) => (
+                        <div key={index} className="border-b border-white/20 py-5 group">
+                            <h1 className="text-2xl md:text-3xl font-[bwGrad-m] text-white group-hover:text-accent transition-colors duration-300">
+                                {faq.question}
+                            </h1>
+                            <div className="overflow-hidden transition-all duration-500 ease-in-out max-h-96 opacity-100 mt-4">
+                                <p className="text-lg md:text-lg font-[bwGrad-l] text-white/70 leading-relaxed">
+                                    {faq.answer}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );

@@ -53,81 +53,95 @@ export default function StudentGrowthSection() {
         const cards = wrapperRef.current?.querySelectorAll('.card');
         if (!cards || cards.length === 0) return;
 
-        // Exit direction for each card: -1 = left, 1 = right, 0 = stay
-        const exitDirections = [
-            -1,  // 1st - exit left
-            1,   // 2nd - exit right
-            1,   // 3rd - exit right
-            1,   // 4th - exit right
-            -1,  // 5th - exit left
-            -1,  // 6th - exit left
-            0,   // 7th - stay (coming from right)
-            0    // 8th - stay (coming from left)
+        // Define exit directions for each card (different angles)
+        const exitPositions = [
+            { x: -800, y: -400 },  // 1st - Top-left
+            { x: 800, y: -400 },   // 2nd - Top-right
+            { x: -900, y: 0 },     // 3rd - Middle-left
+            { x: 900, y: 0 },      // 4th - Middle-right
+            { x: -800, y: 400 },   // 5th - Bottom-left
+            { x: 800, y: 400 },    // 6th - Bottom-right
+            { x: 700, y: 0 },      // 7th - Right side (stays visible)
+            { x: -700, y: 0 }      // 8th - Left side (stays visible)
         ];
 
         // Create animation for each card
         cards.forEach((card, index) => {
-            const exitDirection = exitDirections[index];
-            const shouldStay = exitDirection === 0;
+            const exitPos = exitPositions[index];
+            const isLastTwo = index >= 6; // Last two images (7th and 8th)
 
-            // For last 2 cards, they come from sides
-            let initialX = 0;
-            let initialZ = -300;
-
-            if (index === 6) { // 7th card - comes from right
-                initialX = 700;
-                initialZ = 0;
-            } else if (index === 7) { // 8th card - comes from left
-                initialX = -700;
-                initialZ = 0;
-            }
-
-            // Set initial state
+            // All cards start from deep center (inside screen)
             gsap.set(card, {
-                x: initialX,
-                z: initialZ,
-                scale: shouldStay ? 0.7 : 0.3,
-                opacity: 0
+                x: 0,
+                y: 0,
+                z: -800,
+                scale: 0.5,
+                opacity: 0,
+                rotationX: 0,
+                rotationY: 0
             });
 
             // Create timeline for sequential animation
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: `top+=${index * 13}% top`,
-                    end: shouldStay ? `top+=${index * 13 + 50}% top` : `top+=${index * 13 + 26}% top`,
-                    scrub: 1,
+                    start: `top+=${index * 15}% top`,
+                    end: `top+=${index * 15 + 60}% top`,
+                    scrub: 0.5,
                     // markers: true // Uncomment to debug
                 }
             });
 
-            // Animation based on card type
-            if (shouldStay) {
-                // Last 2 cards: Come from left/right and stay in center
-                tl.to(card, {
-                    x: 0,
-                    z: 0,
-                    scale: 1,
-                    opacity: 1,
-                    duration: 1,
-                    ease: 'power2.out'
-                });
+            if (isLastTwo) {
+                // Last two images: emerge and stay on screen
+                tl.fromTo(card,
+                    {
+                        x: 0,
+                        y: 0,
+                        z: -1000,
+                        scale: 0.3,
+                        opacity: 0
+                    },
+                    {
+                        x: exitPos.x,
+                        y: exitPos.y,
+                        z: 0,
+                        scale: 1,
+                        opacity: 1,
+                        rotationX: 0,
+                        rotationY: 0,
+                        ease: 'power2.out'
+                    }
+                );
             } else {
-                // First 6 cards: Emerge from center then exit
-                tl.to(card, {
-                    x: 0,
-                    z: 0,
-                    scale: 1,
-                    opacity: 1,
-                    duration: 0.4,
-                    ease: 'power2.out'
-                }).to(card, {
-                    x: exitDirection * 700,
-                    z: -200,
+                // First 6 images: emerge and exit
+                tl.fromTo(card,
+                    {
+                        x: 0,
+                        y: 0,
+                        z: -1000,
+                        scale: 0.3,
+                        opacity: 0
+                    },
+                    {
+                        x: exitPos.x * 0.7,
+                        y: exitPos.y * 0.7,
+                        z: 50,
+                        scale: 1,
+                        opacity: 1,
+                        rotationX: Math.random() * 15 - 7.5,
+                        rotationY: Math.random() * 15 - 7.5,
+                        ease: 'power2.out',
+                        duration: 0.5
+                    }
+                ).to(card, {
+                    x: exitPos.x * 1.5,
+                    y: exitPos.y * 1.5,
+                    z: -300,
                     scale: 0.5,
                     opacity: 0,
-                    duration: 0.6,
-                    ease: 'power2.in'
+                    ease: 'power2.in',
+                    duration: 0.5
                 });
             }
         });
@@ -149,7 +163,7 @@ export default function StudentGrowthSection() {
             <div ref={containerRef} className="md:h-[200vh] lg:h-[600vh] mt-5">
                 <div
                     ref={wrapperRef}
-                    className="cardWrapper md:h-screen sticky top-0 origin-center overflow-hidden flex flex-wrap gap-4 items-center justify-center"
+                    className="cardWrapper md:h-screen sticky top-0 origin-center overflow-visible flex flex-wrap gap-4 items-center justify-center"
                     style={{
                         perspective: '1000px',
                         transformStyle: 'preserve-3d'

@@ -303,86 +303,87 @@ const SyllabusSection = () => {
     ];
 
     return (
-        <div className="bg-black text-white w-full py-20 flex flex-col items-center gap-3">
-            {/* Heading */}
-            <h1 className="font-[bwGrad-m] text-center leading-tight text-[2.5rem] px-5 md:px-0 md:text-[4.5rem] max-md:text-4xl">
-                What You'll Study
-            </h1>
-            <p className="md:text-3xl px-3 leading-tight mb-10 md:mb-20 text-[1.3rem] lg:text-4xl text-white/40 text-center font-[bwGrad-r] capitalize">
-                Five months of structured, practical engineering
-            </p>
+        <div className="bg-black text-white w-full">
+            <div className="py-20 flex flex-col items-center gap-3">
+                {/* Heading */}
+                <h1 className="font-[bwGrad-m] text-center leading-tight text-[2.5rem] px-5 md:px-0 md:text-[4.5rem] max-md:text-4xl">
+                    What You'll Study
+                </h1>
+                <p className="md:text-3xl px-3 leading-tight mb-10 md:mb-20 text-[1.3rem] lg:text-4xl text-white/40 text-center font-[bwGrad-r] capitalize">
+                    Five months of structured, practical engineering
+                </p>
 
-            {/* Accordion Container */}
-            <div className="container flex flex-col items-center text-white">
-                {syllabusData.map((item, index) => (
-                    <div
-                        key={index}
-                        className="item border-b py-2 border-white/20 w-[90%] mx-auto flex flex-col gap-3 mb-3"
-                    >
-                        <button
-                            type="button"
-                            onClick={() => toggleItem(index)}
-                            className="flex w-full justify-between items-center cursor-pointer"
-                        >
-                            <div className="flex gap-4 items-center text-left">
-                                <div className="rounded-sm border border-purple-900 bg-zinc-900 p-1.5"></div>
-                                <h1
-                                    className="font-[bwGrad-r] text-[1.5rem] lg:text-3xl md:text-3xl"
-                                    dangerouslySetInnerHTML={{ __html: item.title }}
-                                />
-                            </div>
-                            <h2 className="flex items-center font-[bwGrad-m] gap-1 sm:text-xl lg:text-xl text-sm lg:gap-3">
-                                Expand
-                                <span
-                                    className={`transition-transform duration-200 ${openItems.includes(index) ? 'rotate-180' : 'rotate-0'
-                                        }`}
-                                >
-                                    <i className="ri-arrow-down-s-line text-lg"></i>
-                                </span>
-                            </h2>
-                        </button>
-
-                        {/* Expandable Content */}
+                {/* Accordion Container */}
+                <div className="container flex flex-col items-center text-white">
+                    {syllabusData.map((item, index) => (
                         <div
-                            className={`expandable overflow-hidden md:mt-2 text-left transition-all duration-700 ${openItems.includes(index)
-                                ? 'max-h-[150vh] opacity-100'
-                                : 'max-h-0 opacity-0'
-                                }`}
+                            key={index}
+                            className="item border-b py-2 border-white/20 w-[90%] mx-auto flex flex-col gap-3 mb-3"
                         >
-                            <div className="px-2 lg:px-6">
-                                {item.sections.map((section, sectionIndex) => (
-                                    <div key={sectionIndex} className="md:mb-6 py-2 ml-6 lg:mb-2">
-                                        <h2 className="font-[bwGrad-l] text-[1.3rem] mb-2 lg:mb-3 md:text-2xl lg:text-xl">
-                                            {section.subtitle}
-                                        </h2>
-                                        <div className="bullets text-sm md:text-xl lg:text-base opacity-50">
-                                            <ul className="list-none list-inside space-y-1">
-                                                {section.items.map((listItem, itemIndex) => (
-                                                    <li key={itemIndex} className="font-[bwGrad-l]">
-                                                        {listItem}
-                                                    </li>
-                                                ))}
-                                            </ul>
+                            <button
+                                type="button"
+                                onClick={() => toggleItem(index)}
+                                className="flex w-full justify-between items-center cursor-pointer"
+                            >
+                                <div className="flex gap-4 items-center text-left">
+                                    <div className="rounded-sm border border-purple-900 bg-zinc-900 p-1.5"></div>
+                                    <h1
+                                        className="font-[bwGrad-r] text-[1.5rem] lg:text-3xl md:text-3xl"
+                                        dangerouslySetInnerHTML={{ __html: item.title }}
+                                    />
+                                </div>
+                                <h2 className="flex items-center font-[bwGrad-m] gap-1 sm:text-xl lg:text-xl text-sm lg:gap-3">
+                                    Expand
+                                    <span
+                                        className={`transition-transform duration-200 ${openItems.includes(index) ? 'rotate-180' : 'rotate-0'
+                                            }`}
+                                    >
+                                        <i className="ri-arrow-down-s-line text-lg"></i>
+                                    </span>
+                                </h2>
+                            </button>
+
+                            {/* Expandable Content */}
+                            <div
+                                className={`expandable overflow-hidden md:mt-2 text-left transition-all duration-700 ${openItems.includes(index)
+                                    ? 'max-h-[150vh] opacity-100'
+                                    : 'max-h-0 opacity-0'
+                                    }`}
+                            >
+                                <div className="px-2 lg:px-6">
+                                    {item.sections.map((section, sectionIndex) => (
+                                        <div key={sectionIndex} className="md:mb-6 py-2 ml-6 lg:mb-2">
+                                            <h2 className="font-[bwGrad-l] text-[1.3rem] mb-2 lg:mb-3 md:text-2xl lg:text-xl">
+                                                {section.subtitle}
+                                            </h2>
+                                            <div className="bullets text-sm md:text-xl lg:text-base opacity-50">
+                                                <ul className="list-none list-inside space-y-1">
+                                                    {section.items.map((listItem, itemIndex) => (
+                                                        <li key={itemIndex} className="font-[bwGrad-l]">
+                                                            {listItem}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
 
-                {/* View Complete Syllabus Button */}
-                <button
-                    className="shadow-md border-[.4px] backdrop-blur-2xl border-white/20 w-fit px-7 py-3 md:px-10 md:py-4 text-sm lg:px-8 mt-10 lg:py-2.5 lg:text-base md:text-2xl rounded-full mx-auto cursor-pointer"
-                    style={{
-                        boxShadow: 'rgba(244, 244, 254, 0.25) 0px 4px 8px 0px inset'
-                    }}
-                >
-                    View Complete Syllabus
-                </button>
+                    {/* View Complete Syllabus Button */}
+                    <button
+                        className="shadow-md border-[.4px] backdrop-blur-2xl border-white/20 w-fit px-7 py-3 md:px-10 md:py-4 text-sm lg:px-8 mt-10 lg:py-2.5 lg:text-base md:text-2xl rounded-full mx-auto cursor-pointer"
+                        style={{
+                            boxShadow: 'rgba(244, 244, 254, 0.25) 0px 4px 8px 0px inset'
+                        }}
+                    >
+                        View Complete Syllabus
+                    </button>
+                </div>
             </div>
-        </div>
-    );
+            );
 };
 
-export default SyllabusSection;
+            export default SyllabusSection;
