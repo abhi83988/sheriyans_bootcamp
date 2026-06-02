@@ -1,0 +1,39 @@
+name: Deploy Next.js App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Deploy to EC2
+
+        uses: appleboy/ssh-action@master
+
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+
+            cd /home/ubuntu/sheriyans_bootcamp
+
+            git pull origin main
+
+            docker stop nextjs-container || true
+
+            docker rm nextjs-container || true
+
+            docker build -t nextjs-app .
+
+            docker run -d \
+            -p 3000:3000 \
+            --name nextjs-container \
+            nextjs-app
