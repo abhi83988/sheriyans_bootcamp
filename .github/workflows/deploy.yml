@@ -23,7 +23,7 @@ jobs:
 
           script: |
 
-            cd /home/ubuntu/project-name
+            cd /home/ubuntu/sheriyans_bootcamp
 
             git pull origin main
 
