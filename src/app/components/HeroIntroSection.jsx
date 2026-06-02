@@ -28,7 +28,7 @@ const HeroIntroSection = () => {
 
                 {/* Badge Text */}
                 <h4 className="mb-3 text-sm md:text-lg lg:text-sm font-[bwGrad-l]">
-                    <span className="accent text-[#9685fe]">1000+</span> Happy students in the program
+                    <span className="accent text-[#9685fe]">1000+</span> Happy Birthday in the program
                 </h4>
 
                 {/* Main Heading */}
